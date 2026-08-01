@@ -58,6 +58,38 @@ Missing values are omitted, so an incomplete current-day activity record does
 not produce placeholder text. This command only prints the summary; it does
 not publish anything.
 
+## Publish to Threads
+
+Create a Threads app in the Meta developer dashboard and authorize a Threads
+user with at least these scopes:
+
+- `threads_basic`
+- `threads_content_publish`
+
+Add its long-lived user token to `.env`:
+
+```dotenv
+THREADS_ACCESS_TOKEN=...
+```
+
+Preview the exact post without publishing:
+
+```bash
+python publish_summary.py
+python publish_summary.py --day 2026-07-30
+```
+
+Publishing requires an explicit flag:
+
+```bash
+python publish_summary.py --day 2026-07-30 --publish
+```
+
+The publisher creates a text container and then publishes that container using
+Meta's official two-step Threads API flow. Keep the access token out of Git;
+for automation, store it as a GitHub Actions secret named
+`THREADS_ACCESS_TOKEN`.
+
 ## GitHub Actions
 
 The `Daily Oura sync` workflow runs every day at 15:00 UTC and can also be
