@@ -40,6 +40,24 @@ The daily job fetches and upserts an inclusive three-day window. Re-fetching
 recent days accounts for late Oura calculations, updated scores, and missed
 automation runs. Supabase must have a unique constraint on `oura_daily.day`.
 
+## Generate a daily summary
+
+Generate a post-ready summary from the newest stored row:
+
+```bash
+python generate_summary.py
+```
+
+Or generate one for a specific date:
+
+```bash
+python generate_summary.py --day 2026-07-30
+```
+
+Missing values are omitted, so an incomplete current-day activity record does
+not produce placeholder text. This command only prints the summary; it does
+not publish anything.
+
 ## GitHub Actions
 
 The `Daily Oura sync` workflow runs every day at 15:00 UTC and can also be
